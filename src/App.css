@@ -52,7 +52,7 @@ li {
 }
 
 .input-text::placeholder {
-  color: 10px 5px 5px silver;
+  color: silver;
 }
 
 .input-submit {
@@ -62,9 +62,6 @@ li {
   cursor: pointer;
   font-weight: 600;
   margin-right: 10px;
-}
-
-.input-submit {
   border: none;
 }
 

@@ -12,6 +12,7 @@ import Navbar from './Navbar';
 const TodoContainer = () => {
   const [todos, setTodos] = useState([]);
   const docRef = db.collection('todo-liste').doc(uuidv4());
+  const batch = db.batch();
 
   useEffect(() => {
     db.collection('todo-liste')
@@ -28,17 +29,19 @@ const TodoContainer = () => {
       });
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('todosItems', JSON.stringify(todos));
-  }, [todos]);
-
-  const handleChange = (id) => {
-    setTodos([...todos].map((todo) => {
+  const handleChange = async (id) => {
+    const newTodo = [...todos].map((todo) => {
       if (todo.id === id) {
         return { ...todo, completed: !todo.completed };
       }
       return todo;
-    }));
+    });
+    const docIdToUpdate = [...newTodo.filter((todo) => todo.id === id)];
+
+    const sfRef = db.collection('todo-liste').doc(docIdToUpdate[0].docId);
+    batch.update(sfRef, { completed: docIdToUpdate[0].completed });
+    await batch.commit();
+    await setTodos(newTodo);
   };
 
   const delTodo = async (id) => {
@@ -57,13 +60,18 @@ const TodoContainer = () => {
     await setTodos((prevTodos) => [...prevTodos, newTodos]);
   };
 
-  const setUpdate = (updateTitle, id) => {
-    setTodos([...todos].map((todo) => {
+  const setUpdate = async (updateTitle, id) => {
+    const newTodo = [...todos].map((todo) => {
       if (todo.id === id) {
         return { ...todo, title: updateTitle };
       }
       return todo;
-    }));
+    });
+    setTodos(newTodo);
+    const docIdToUpdate = [...todos.filter((todo) => todo.id === id)];
+    const sfRef = db.collection('todo-liste').doc(docIdToUpdate[0].docId);
+    await batch.update(sfRef, { title: docIdToUpdate[0].title });
+    await batch.commit();
   };
 
   return (
@@ -88,7 +96,7 @@ const TodoContainer = () => {
                 />
               </div>
             </div>
-        )}
+          )}
         />
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotMatch />} />

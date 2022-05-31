@@ -3,7 +3,7 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 
 const app = firebase.initializeApp({
-  apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: 'AIzaSyCtLr6BMMciywzfk3bOWgvGG2QBZUsZFZ8',
   authDomain: 'carry-up-30be1.firebaseapp.com',
   projectId: 'carry-up-30be1',
   storageBucket: 'carry-up-30be1.appspot.com',
