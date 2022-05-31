@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaPlusCircle } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 
 const InputTodo = ({ addTodoProps }) => {
@@ -29,7 +30,9 @@ const InputTodo = ({ addTodoProps }) => {
         type="button"
         className="input-submit"
       >
-        Submit
+        <FaPlusCircle
+          style={{ color: 'darkcyan', fontSize: '20px', marginTop: '2px' }}
+        />
       </button>
     </form>
   );
