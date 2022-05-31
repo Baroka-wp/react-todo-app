@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import TodoItem from './TodoItem';
 
-const TodosList = ({ handleChangeProps, deleteTodoProps, todos }) => (
+const TodosList = ({
+  handleChangeProps, deleteTodoProps, todos, setUpdate,
+}) => (
   <ul>
     {
             todos.map((todo) => (
@@ -10,6 +12,7 @@ const TodosList = ({ handleChangeProps, deleteTodoProps, todos }) => (
                 todo={todo}
                 handleChangeProps={handleChangeProps}
                 deleteTodoProps={deleteTodoProps}
+                setUpdate={setUpdate}
               />
             ))
         }
@@ -20,6 +23,7 @@ TodosList.propTypes = {
   todos: PropTypes.instanceOf(Array).isRequired,
   handleChangeProps: PropTypes.func.isRequired,
   deleteTodoProps: PropTypes.func.isRequired,
+  setUpdate: PropTypes.func.isRequired,
 };
 
 export default TodosList;

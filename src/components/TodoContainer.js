@@ -1,28 +1,32 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { db } from '../utils/firebase.config';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodosList from './TodosList';
 
 const TodoContainer = () => {
-  const todoList = [
-    {
-      id: uuidv4(),
-      title: 'Setup development environment',
-      completed: true,
-    },
-    {
-      id: uuidv4(),
-      title: 'Develop website and add content',
-      completed: false,
-    },
-    {
-      id: uuidv4(),
-      title: 'Deploy to live server',
-      completed: false,
-    },
-  ];
-  const [todos, setTodos] = useState(todoList);
+  const [todos, setTodos] = useState([]);
+  const docRef = db.collection('todo-liste').doc(uuidv4());
+
+  useEffect(() => {
+    db.collection('todo-liste')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setTodos((prevTodos) => [...prevTodos, {
+            docId: doc.id,
+            id: doc.data().id,
+            title: doc.data().title,
+            completed: doc.data().completed,
+          }]);
+        });
+      });
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('todosItems', JSON.stringify(todos));
+  }, [todos]);
 
   const handleChange = (id) => {
     setTodos([...todos].map((todo) => {
@@ -33,17 +37,29 @@ const TodoContainer = () => {
     }));
   };
 
-  const delTodo = (id) => {
-    setTodos([...todos.filter((todo) => todo.id !== id)]);
+  const delTodo = async (id) => {
+    const docIdToDel = [...todos.filter((todo) => todo.id === id)];
+    await db.collection('todo-liste').doc(docIdToDel[0].docId).delete();
+    await setTodos([...todos.filter((todo) => todo.id !== id)]);
   };
 
-  const addTodoItem = (title) => {
+  const addTodoItem = async (title) => {
     const newTodos = {
       id: uuidv4(),
       title,
       completed: false,
     };
-    setTodos((prevTodos) => [...prevTodos, newTodos]);
+    await docRef.set(newTodos);
+    await setTodos((prevTodos) => [...prevTodos, newTodos]);
+  };
+
+  const setUpdate = (updateTitle, id) => {
+    setTodos([...todos].map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, title: updateTitle };
+      }
+      return todo;
+    }));
   };
 
   return (
@@ -57,6 +73,7 @@ const TodoContainer = () => {
           todos={todos}
           handleChangeProps={handleChange}
           deleteTodoProps={delTodo}
+          setUpdate={setUpdate}
         />
       </div>
     </div>

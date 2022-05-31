@@ -10,7 +10,6 @@ const InputTodo = ({ addTodoProps }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (title.trim()) {
       addTodoProps(title);
       SetTitle('');
