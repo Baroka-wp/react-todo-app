@@ -80,7 +80,7 @@ const TodoContainer = () => {
       <Routes>
         <Route
           exact
-          path="/"
+          path="/react-todo-app"
           element={(
             <div className="container">
               <div className="inner">
