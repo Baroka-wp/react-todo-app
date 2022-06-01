@@ -1,0 +1,219 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  line-height: 1.4;
+  color: #444;
+  background: #fff;
+  height: 100vh;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.inner {
+  width: 100%;
+  padding: 3rem 10px 4rem;
+}
+
+.form-container {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  border-radius: calc(0.5 * 100px);
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.38);
+  justify-content: space-evenly;
+}
+
+.input-text {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  width: 85%;
+  height: 45px;
+  outline: none;
+  padding-right: 5px;
+  padding-left: 10px;
+  border-radius: calc(0.5 * 100px);
+}
+
+.input-text::placeholder {
+  color: silver;
+}
+
+.input-submit {
+  background: transparent;
+  color: #5b5b5b;
+  text-transform: capitalize;
+  cursor: pointer;
+  font-weight: 600;
+  margin-right: 10px;
+  border: none;
+}
+
+.input-submit svg {
+  color: darkcyan;
+  font-size: 20px;
+  margin-top: 2px;
+}
+
+.active-link {
+  color: orangered;
+  text-decoration: underline;
+}
+
+.navBar {
+  position: relative;
+}
+
+.navBar button {
+  position: fixed;
+  left: 40px;
+  top: 40px;
+  z-index: 10;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.menuNav {
+  overflow-y: scroll;
+  list-style: none;
+  position: fixed;
+  top: 0;
+  background: darkcyan;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
+  width: 0;
+  overflow: hidden;
+  max-width: 290px;
+  z-index: 9;
+}
+
+.menuNav.showMenu {
+  width: 100%;
+}
+
+a {
+  display: block;
+  padding: 10px 40px;
+  text-decoration: none;
+  color: #3fffd2;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.menuNav li:first-child {
+  margin-top: 7rem;
+}
+
+.about__content {
+  padding: 8rem 40px;
+  display: flex;
+}
+
+.about__list {
+  list-style: none;
+  flex: 2;
+  margin-right: 15px;
+}
+
+.about__list a {
+  color: #9f9f9f;
+  text-transform: capitalize;
+  padding: 20px 0;
+  font-weight: 600;
+}
+
+.about__list a:hover {
+  color: #000;
+}
+
+.main__content {
+  flex: 7;
+}
+
+.main__content h1 {
+  margin-bottom: 15px;
+  line-height: 30px;
+  font-size: 30px;
+}
+
+.main__content p {
+  line-height: 25px;
+}
+
+.register {
+  padding: 100px 0;
+}
+
+.register button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+}
+
+.btn-success {
+  background: #3fffd2;
+  font-weight: 600;
+}
+
+.btn-info {
+  background: #a5bcea;
+  font-weight: 600;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.loginForm form {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.loginInput {
+  padding: 10px;
+  border: 1px solid #a5bcea;
+  font-size: large;
+}
+
+.loginForm form input[type="submit"] {
+  padding: 10px 20px;
+  background: #3fffd2;
+  font-weight: 600;
+  border: none;
+}
+
+.logout {
+  padding-top: 50px;
+}
+
+.logout button {
+  padding: 10px 20px;
+  border: none;
+}
