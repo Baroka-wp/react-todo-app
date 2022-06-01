@@ -16,6 +16,10 @@ li {
   list-style: none;
 }
 
+button {
+  cursor: pointer;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -27,7 +31,7 @@ li {
 
 .inner {
   width: 100%;
-  padding: 8rem 10px 4rem;
+  padding: 3rem 10px 4rem;
 }
 
 .form-container {
@@ -156,4 +160,60 @@ a {
 
 .main__content p {
   line-height: 25px;
+}
+
+.register {
+  padding: 100px 0;
+}
+
+.register button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+}
+
+.btn-success {
+  background: #3fffd2;
+  font-weight: 600;
+}
+
+.btn-info {
+  background: #a5bcea;
+  font-weight: 600;
+}
+
+.navMenu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.loginForm form {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.loginInput {
+  padding: 10px;
+  border: 1px solid #a5bcea;
+  font-size: large;
+}
+
+.loginForm form input[type="submit"] {
+  padding: 10px 20px;
+  background: #3fffd2;
+  font-weight: 600;
+  border: none;
+}
+
+.logout {
+  padding-top: 50px;
+}
+
+.logout button {
+  padding: 10px 20px;
+  border: none;
 }

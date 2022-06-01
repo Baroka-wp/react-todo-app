@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Route, Routes } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { db } from '../utils/firebase.config';
+import { signOut } from 'firebase/auth';
+import { auth, db } from '../utils/firebase.config';
 import Header from './Header';
 import InputTodo from './InputTodo';
 import TodosList from './TodosList';
@@ -9,7 +11,7 @@ import About from './pages/About';
 import NotMatch from './pages/NotMatch';
 import Navbar from './Navbar';
 
-const TodoContainer = () => {
+const TodoContainer = ({ userId }) => {
   const [todos, setTodos] = useState([]);
   const docRef = db.collection('todo-liste').doc(uuidv4());
   const batch = db.batch();
@@ -19,12 +21,15 @@ const TodoContainer = () => {
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          setTodos((prevTodos) => [...prevTodos, {
-            docId: doc.id,
-            id: doc.data().id,
-            title: doc.data().title,
-            completed: doc.data().completed,
-          }]);
+          if (doc.data().userId && doc.data().userId === userId) {
+            setTodos((prevTodos) => [...prevTodos, {
+              docId: doc.id,
+              userId: doc.data().userId,
+              id: doc.data().id,
+              title: doc.data().title,
+              completed: doc.data().completed,
+            }]);
+          }
         });
       });
   }, []);
@@ -52,6 +57,7 @@ const TodoContainer = () => {
 
   const addTodoItem = async (title) => {
     const newTodos = {
+      userId,
       id: uuidv4(),
       title,
       completed: false,
@@ -74,6 +80,10 @@ const TodoContainer = () => {
     await batch.commit();
   };
 
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   return (
     <>
       <Navbar />
@@ -83,6 +93,15 @@ const TodoContainer = () => {
           path="/react-todo-app"
           element={(
             <div className="container">
+              <div className="logout">
+                <button
+                  type="button"
+                  className="btn-info"
+                  onClick={() => handleLogout()}
+                >
+                  Logout
+                </button>
+              </div>
               <div className="inner">
                 <Header />
                 <InputTodo
@@ -103,6 +122,10 @@ const TodoContainer = () => {
       </Routes>
     </>
   );
+};
+
+TodoContainer.propTypes = {
+  userId: PropTypes.string.isRequired,
 };
 
 export default TodoContainer;
